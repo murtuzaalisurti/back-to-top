@@ -95,26 +95,26 @@
   }).call(void 0);
 
   // main.js
-  var _hidden, _show;
+  var _defaultStyles, _hidden, _show;
   var _BackToTop = class _BackToTop extends HTMLButtonElement {
     constructor() {
       super();
-      __privateAdd(this, _hidden, `
-        position: fixed;
-        opacity: 0;
-        visibility: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `);
-      __privateAdd(this, _show, `
-        position: fixed;
-        opacity: 1;
-        visibility: visible;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `);
+      __privateAdd(this, _defaultStyles, {
+        position: "fixed",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      });
+      __privateAdd(this, _hidden, this.getCSSFromJSDeclaration({
+        ...__privateGet(this, _defaultStyles),
+        opacity: 0,
+        visibility: "hidden"
+      }));
+      __privateAdd(this, _show, this.getCSSFromJSDeclaration({
+        ...__privateGet(this, _defaultStyles),
+        opacity: 1,
+        visibility: "visible"
+      }));
       __publicField(this, "handleThrottle", _.throttle(() => {
         let prevScrollPos = document.documentElement.scrollTop || window.scrollY || document.body.scrollTop;
         this.currentScrollPos <= prevScrollPos ? this.style = __privateGet(this, _hidden) : this.style = __privateGet(this, _show);
@@ -133,6 +133,20 @@
         }
         customElements.define(tagName || "back-to-top", _BackToTop);
       }
+    }
+    getCSSFromJSDeclaration(obj) {
+      return Object.keys(obj).map((key) => {
+        const camelCaseProperty = key.split("").some((letter) => letter.toLowerCase() !== letter);
+        const parsedKey = camelCaseProperty ? key.split("").splice(
+          key.split("").findIndex((letter) => letter.toLowerCase() !== letter)
+        ).join("").toLowerCase().concat("-").concat(
+          key.split("").splice(
+            0,
+            key.split("").findIndex((letter) => letter.toLowerCase() !== letter)
+          ).join("").toLowerCase()
+        ).split("-").reverse().join("-") : key;
+        return `${parsedKey}: ${obj[key]}`;
+      }).join(";").concat(";");
     }
     connectedCallback() {
       this.style = "display: none";
@@ -162,6 +176,7 @@
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   };
+  _defaultStyles = new WeakMap();
   _hidden = new WeakMap();
   _show = new WeakMap();
   var BackToTop = _BackToTop;

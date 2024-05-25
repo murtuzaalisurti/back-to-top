@@ -22,23 +22,40 @@ class BackToTop extends HTMLButtonElement {
         }
     }
 
-    #hidden = `
-        position: fixed;
-        opacity: 0;
-        visibility: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `
+    #defaultStyles = {
+        position: "fixed",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    }
 
-    #show = `
-        position: fixed;
-        opacity: 1;
-        visibility: visible;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `
+    getCSSFromJSDeclaration(obj) {
+        return Object.keys(obj).map(key => {
+            const camelCaseProperty = key.split("").some(letter => letter.toLowerCase() !== letter)
+            const parsedKey =
+                camelCaseProperty ? key.split("").splice(
+                    key.split("").findIndex(letter => letter.toLowerCase() !== letter)
+                ).join("").toLowerCase().concat("-").concat(
+                    key.split("").splice(
+                        0, key.split("").findIndex(letter => letter.toLowerCase() !== letter)
+                    ).join("").toLowerCase()
+                ).split("-").reverse().join("-") : key;
+
+            return `${parsedKey}: ${obj[key]}`
+        }).join(";").concat(";")
+    }
+
+    #hidden = this.getCSSFromJSDeclaration({
+        ...this.#defaultStyles,
+        opacity: 0,
+        visibility: "hidden"
+    })
+
+    #show = this.getCSSFromJSDeclaration({
+        ...this.#defaultStyles,
+        opacity: 1,
+        visibility: "visible"
+    })
 
     connectedCallback() {
         this.style = 'display: none';
