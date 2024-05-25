@@ -1,9 +1,9 @@
-import "./lodash.custom.min.js"
-
 /**
  * @license
  * This component uses a custom loash build which includes only the 'throttle' module
  */
+import "./lodash.custom.min.js"
+
 class BackToTop extends HTMLButtonElement {
     constructor() {
         super();

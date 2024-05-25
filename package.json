@@ -6,7 +6,7 @@
   "main": "public/main.js",
   "scripts": {
     "lodash:custom": "lodash include=throttle -p",
-    "build": "node build",
+    "build": "node build.js",
     "start": "nodemon server.js",
     "dev": "npm-run-all -s build start",
     "prod": "npm-run-all -s lodash:custom build",
