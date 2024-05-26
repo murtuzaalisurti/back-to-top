@@ -1,5 +1,5 @@
 {
-  "name": "back-to-top",
+  "name": "@murtuzaalisurti/back-to-top",
   "version": "1.0.0",
   "description": "<back-to-top> web component by Murtuzaali Surti",
   "type": "module",
@@ -7,18 +7,31 @@
   "scripts": {
     "lodash:custom": "lodash include=throttle -p",
     "build": "node build.js",
-    "start": "nodemon server.js",
-    "dev": "npm-run-all -s build start",
-    "prod": "npm-run-all -s lodash:custom build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "nodemon server.js",
+    "start": "npm-run-all -s build serve",
+    "dev": "npm-run-all -s lodash:custom build serve",
+    "prod": "npm-run-all -s lodash:custom build"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murtuzaalisurti/back-to-top.git"
+  },
+  "keywords": [
+    "web component",
+    "back-to-top",
+    "button",
+    "component"
+  ],
   "author": {
     "name": "Murtuzaali Surti",
     "email": "hey.murtuza@gmail.com",
     "url": "https://murtuzaalisurti.github.io"
   },
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/murtuzaalisurti/back-to-top/issues"
+  },
+  "homepage": "https://github.com/murtuzaalisurti/back-to-top#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
