@@ -58,6 +58,10 @@ You can style this component however you want, here are some styles to start wit
     left: 2rem;
     width: 3rem;
     height: 3rem;
+    border: none;
+    border-radius: 50%;
+    z-index: 10;
+    cursor: pointer;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 ```
