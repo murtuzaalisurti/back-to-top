@@ -7,9 +7,11 @@
   "scripts": {
     "lodash:custom": "lodash include=throttle -p",
     "build": "node build.js",
+    "build:watch": "node build.js watch",
     "serve": "nodemon server.js",
-    "start": "npm-run-all -s build serve",
-    "dev": "npm-run-all -s lodash:custom build serve",
+    "start": "npm-run-all -p build serve",
+    "start:watch": "npm-run-all -p build:watch serve",
+    "dev": "npm-run-all -s lodash:custom start:watch",
     "prod": "npm-run-all -s lodash:custom build"
   },
   "repository": {
