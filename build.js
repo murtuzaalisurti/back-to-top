@@ -1,8 +1,14 @@
-import * as esbuild from 'esbuild'
+import * as esbuild from 'esbuild';
 
-esbuild.buildSync({
+const [_, __, mode] = process.argv;
+
+const config = {
     entryPoints: ['main.js'],
     bundle: true,
     target: ['es2020'],
     outdir: './public'
-})
+};
+
+mode === "watch"
+    ? (await esbuild.context(config)).watch()
+    : esbuild.buildSync(config)
