@@ -123,6 +123,11 @@
         customElements.define(tagName || "back-to-top", _BackToTop);
       }
     }
+    /**
+     * @explain
+     * Converting camelCase CSS properties defined in JS objects to kebab case
+     * and returning the CSS block
+     */
     getCSSFromJSDeclaration(obj) {
       return Object.keys(obj).map((key) => {
         const camelCaseProperty = key.split("").some((letter) => letter.toLowerCase() !== letter);
@@ -182,9 +187,11 @@
         this.svgUpArrow.style.height = "80%";
       }
     }
+    // observing the "throttle" attribute
     attributeChangedCallback(name, oldVal, newVal) {
       name === "throttle" && (this.setThrottleRate = newVal) && (this.handleThrottle = this.throttledFunction(this.getThrottleRate));
     }
+    // when the component is removed from the document, removing the listeners
     disconnectedCallback() {
       window.removeEventListener("scroll", this.handleThrottle);
       this.backToTopButton.removeEventListener("click", this.handleClick);
