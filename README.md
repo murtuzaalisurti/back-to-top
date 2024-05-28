@@ -89,4 +89,4 @@ Introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/
 
 - This package uses lodash for [throttling](https://css-tricks.com/debouncing-throttling-explained-examples/) scroll events in order to show/hide the back-to-top button component.
 - It uses a custom lodash build generated from `lodash include=throttle -p`.
-- Throttle support introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/2.0.0)
+- Throttle rate modification support introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/2.0.0)
