@@ -43,7 +43,11 @@ class BackToTop extends HTMLElement {
     }
 
     get backToTopButton() {
-        return document.querySelector("back-to-top > button:first-child");
+        return this.querySelector("button");
+    }
+
+    get backToTopLink() {
+        return this.querySelector("a");
     }
 
     get svgUpArrow() {
@@ -104,9 +108,11 @@ class BackToTop extends HTMLElement {
     }
 
     connectedCallback() {
+        this.backToTopLink && this.backToTopLink.setAttribute("hidden", true);
         this.append(document.createElement("button"));
         this.backToTopButton.classList.add("back-to-top");
         this.backToTopButton.style = this.#hidden;
+        this.backToTopButton.removeAttribute("hidden");
 
         this.currentScrollPos =
             document.documentElement.scrollTop ||
@@ -122,13 +128,14 @@ class BackToTop extends HTMLElement {
         `;
 
         const currentSVGStyles = this.getComputedStyles(this.svgUpArrow);
+        const currentBackToTopButtonStyles = this.getComputedStyles(this.backToTopButton);
 
         if (currentSVGStyles.getPropertyValue("display") === "inline") {
             this.svgUpArrow.style.display = "block";
         }
 
-        if (currentSVGStyles.getPropertyValue("height") === "auto") {
-            this.svgUpArrow.style.height = "80%";
+        if (currentSVGStyles.getPropertyValue("height") === currentBackToTopButtonStyles.getPropertyValue("height")) {
+            this.svgUpArrow.style.height = "70%";
         }
     }
 

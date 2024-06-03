@@ -143,7 +143,10 @@
       }).join(";").concat(";");
     }
     get backToTopButton() {
-      return document.querySelector("back-to-top > button:first-child");
+      return this.querySelector("button");
+    }
+    get backToTopLink() {
+      return this.querySelector("a");
     }
     get svgUpArrow() {
       return this.backToTopButton.querySelector("svg");
@@ -169,9 +172,11 @@
       }, rate);
     }
     connectedCallback() {
+      this.backToTopLink && this.backToTopLink.setAttribute("hidden", true);
       this.append(document.createElement("button"));
       this.backToTopButton.classList.add("back-to-top");
       this.backToTopButton.style = __privateGet(this, _hidden);
+      this.backToTopButton.removeAttribute("hidden");
       this.currentScrollPos = document.documentElement.scrollTop || window.scrollY || document.body.scrollTop;
       this.handleThrottle = this.throttledFunction(this.getThrottleRate);
       window.addEventListener("scroll", this.handleThrottle);
@@ -180,11 +185,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>
         `;
       const currentSVGStyles = this.getComputedStyles(this.svgUpArrow);
+      const currentBackToTopButtonStyles = this.getComputedStyles(this.backToTopButton);
       if (currentSVGStyles.getPropertyValue("display") === "inline") {
         this.svgUpArrow.style.display = "block";
       }
-      if (currentSVGStyles.getPropertyValue("height") === "auto") {
-        this.svgUpArrow.style.height = "80%";
+      if (currentSVGStyles.getPropertyValue("height") === currentBackToTopButtonStyles.getPropertyValue("height")) {
+        this.svgUpArrow.style.height = "70%";
       }
     }
     // observing the "throttle" attribute

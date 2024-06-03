@@ -20,14 +20,13 @@
             cursor: pointer;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
-        .back-to-top svg {
-            height: 80%;
-        }
     </style>
 </head>
 
 <body style="min-height: 200rem;">
-    <back-to-top throttle="600"></back-to-top>
+    <back-to-top throttle="500">
+        <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    </back-to-top>
     <script type="module" src="./main.js"></script>
 </body>
 
