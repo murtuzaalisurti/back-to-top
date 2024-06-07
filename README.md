@@ -1,9 +1,16 @@
 # &lt;back-to-top&gt;
 
-A `<back-to-top>` button web component with throttle support.
+A `<back-to-top>` button web component with throttle support. Fallbacks to anchor link.
 
 ```html
-<back-to-top throttle="600"></back-to-top>
+<back-to-top throttle="600">
+    <!-- 👇 fallback anchor link (v3.0) -->
+    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    <!-- 👇 insert button content here -->
+    <template>
+        button content here
+    </template>
+</back-to-top>
 ```
 
 ```css
@@ -61,7 +68,30 @@ With the js script in place, just add this component in your HTML.
 <back-to-top throttle="600"></back-to-top>
 ```
 
-You can style this component however you want, here are some styles to start with:
+### Fallback Anchor Link (v3.0)
+
+With version 3.0 you can specify a fallback anchor link which is useful when javascript can't execute.
+
+```html
+<back-to-top throttle="600">
+    <!-- 👇 fallback anchor link (v3.0) -->
+    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+</back-to-top>
+```
+
+### Customizable Button Content
+
+You can now specify the button content using a template element inside the `back-to-top` component.
+
+```html
+<back-to-top throttle="600">
+    <template>
+        button content here
+    </template>
+</back-to-top>
+```
+
+You can style this component however you want (the `.back-to-top` class is automatically added to the button for you), here are some styles to start with:
 
 ```css
 .back-to-top {
@@ -82,7 +112,14 @@ You can style this component however you want, here are some styles to start wit
 Introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/2.0.0), you can now use the `throttle` attribute to set a throttle rate for the back-to-top button. The value is in milliseconds.
 
 ```html
-<back-to-top throttle="800"></back-to-top>
+<back-to-top throttle="600">
+    <!-- 👇 fallback anchor link (v3.0) -->
+    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    <!-- 👇 insert button content here -->
+    <template>
+        button content here
+    </template>
+</back-to-top>
 ```
 
 ## Event Throttling
