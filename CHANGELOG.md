@@ -2,6 +2,13 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.0)
+
+### Added
+
+- Fallback anchor link support when javascript can't execute. ([#5](https://github.com/murtuzaalisurti/back-to-top/pull/5))
+- Customizable button content [https://github.com/murtuzaalisurti/back-to-top/pull/5/commits/83dfe0e2d79dea0d77bf4ffdc4b16c0b073934cd](https://github.com/murtuzaalisurti/back-to-top/pull/5/commits/83dfe0e2d79dea0d77bf4ffdc4b16c0b073934cd).
+
 ## [v2.0.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/2.0.0)
 
 ### Added
