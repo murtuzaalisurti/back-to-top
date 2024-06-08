@@ -5,7 +5,7 @@ A `<back-to-top>` button web component with throttle support. Fallbacks to ancho
 ```html
 <back-to-top throttle="600">
     <!-- 👇 fallback anchor link (v3.0) -->
-    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    <a href="#" class="back-to-top-fallback" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
     <!-- 👇 insert button content here -->
     <template>
         button content here
@@ -14,7 +14,7 @@ A `<back-to-top>` button web component with throttle support. Fallbacks to ancho
 ```
 
 ```css
-.back-to-top {
+.back-to-top, a.back-to-top-fallback {
     bottom: 3rem;
     left: 2rem;
     width: 3rem;
@@ -24,6 +24,15 @@ A `<back-to-top>` button web component with throttle support. Fallbacks to ancho
     z-index: 10;
     cursor: pointer;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+a.back-to-top-fallback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+a.back-to-top-fallback svg, .back-to-top svg {
+    height: 70%;
 }
 ```
 
@@ -75,9 +84,11 @@ With version 3.0 you can specify a fallback anchor link which is useful when jav
 ```html
 <back-to-top throttle="600">
     <!-- 👇 fallback anchor link (v3.0) -->
-    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    <a href="#" class="back-to-top-fallback" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
 </back-to-top>
 ```
+
+From `3.0.1`, you need to specify the `back-to-top-fallback` class for the fallback element if your fallback element is other than an anchor tag.
 
 ### Customizable Button Content
 
@@ -94,7 +105,7 @@ You can now specify the button content using a template element inside the `back
 You can style this component however you want (the `.back-to-top` class is automatically added to the button for you), here are some styles to start with:
 
 ```css
-.back-to-top {
+.back-to-top, a.back-to-top-fallback {
     bottom: 3rem;
     left: 2rem;
     width: 3rem;
@@ -105,6 +116,15 @@ You can style this component however you want (the `.back-to-top` class is autom
     cursor: pointer;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
+a.back-to-top-fallback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+a.back-to-top-fallback svg, .back-to-top svg {
+    height: 70%;
+}
 ```
 
 ## Options
@@ -114,7 +134,7 @@ Introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/
 ```html
 <back-to-top throttle="600">
     <!-- 👇 fallback anchor link (v3.0) -->
-    <a href="#" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
+    <a href="#" class="back-to-top-fallback" style="position: fixed; left: 1rem; bottom: 2rem;">back-to-top</a>
     <!-- 👇 insert button content here -->
     <template>
         button content here

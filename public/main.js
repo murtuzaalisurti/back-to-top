@@ -147,12 +147,6 @@
         return `${parsedKey}: ${obj[key]}`;
       }).join(";").concat(";");
     }
-    get backToTopButton() {
-      return this.querySelector("button");
-    }
-    get backToTopLink() {
-      return this.querySelector("a");
-    }
     get svg() {
       return this.backToTopButton.querySelector("svg");
     }
@@ -167,6 +161,15 @@
     }
     set setButtonContent(value) {
       this.buttonContent = value;
+    }
+    backToTopChildElement(selector) {
+      return this.querySelector(selector);
+    }
+    get backToTopLink() {
+      return this.backToTopChildElement(".back-to-top-fallback") ?? this.backToTopChildElement("a");
+    }
+    get backToTopButton() {
+      return this.backToTopChildElement("button");
     }
     parseHTMLFromString(htmlAsString) {
       return new DOMParser().parseFromString(htmlAsString, "text/html");
@@ -190,6 +193,7 @@
     }
     connectedCallback() {
       this.backToTopLink && this.backToTopLink.setAttribute("hidden", true);
+      this.backToTopLink && (this.backToTopLink.style.display = "none");
       this.append(document.createElement("button"));
       this.backToTopButton.classList.add("back-to-top");
       this.backToTopButton.style = __privateGet(this, _hidden);
@@ -204,12 +208,8 @@
       this.backToTopButton.addEventListener("click", this.handleClick);
       if (this.svg) {
         const currentSVGStyles = this.getComputedStyles(this.svg);
-        const currentBackToTopButtonStyles = this.getComputedStyles(this.backToTopButton);
         if (currentSVGStyles.getPropertyValue("display") === "inline") {
           this.svg.style.display = "block";
-        }
-        if (currentSVGStyles.getPropertyValue("height") === currentBackToTopButtonStyles.getPropertyValue("height")) {
-          this.svg.style.height = "70%";
         }
       }
     }
