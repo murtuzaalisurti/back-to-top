@@ -2,6 +2,22 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.1](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.1)
+
+### Improvements
+
+- fix: add display none to fallback element to prevent style override (hidden attribute gets overridden by display flex).
+- fix: supports class `back-to-top-fallback` for the fallback element selection.
+
+```html
+<back-to-top throttle="350">
+    <a href="#" class="back-to-top-fallback" style="position: fixed;">back-to-top</a>
+    <template>
+        button content here
+    </template>
+</back-to-top>
+```
+
 ## [v3.0.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.0)
 
 ### Added
