@@ -6,8 +6,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Improvements
 
-- fix: add display none to fallback element to prevent style override (hidden attribute gets overridden by display flex).
-- fix: supports class `back-to-top-fallback` for the fallback element selection.
+- fix: add display none to fallback element to prevent style override (hidden attribute gets overridden by display flex). - 9a3fc89
+- fix: supports class `back-to-top-fallback` for the fallback element selection. - 2df7e06
 
 ```html
 <back-to-top throttle="350">
