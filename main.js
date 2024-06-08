@@ -47,14 +47,6 @@ class BackToTop extends HTMLElement {
         }).join(";").concat(";");
     }
 
-    get backToTopButton() {
-        return this.querySelector("button");
-    }
-
-    get backToTopLink() {
-        return this.querySelector("a");
-    }
-
     get svg() {
         return this.backToTopButton.querySelector('svg');
     }
@@ -73,6 +65,18 @@ class BackToTop extends HTMLElement {
 
     set setButtonContent(value) {
         this.buttonContent = value;
+    }
+
+    backToTopChildElement(selector) {
+        return this.querySelector(selector);
+    }
+
+    get backToTopLink() {
+        return this.backToTopChildElement('.back-to-top-fallback') ?? this.backToTopChildElement('a');
+    }
+
+    get backToTopButton() {
+        return this.backToTopChildElement('button');
     }
 
     parseHTMLFromString(htmlAsString) {
@@ -158,7 +162,6 @@ class BackToTop extends HTMLElement {
 
         if (this.svg) {
             const currentSVGStyles = this.getComputedStyles(this.svg);
-            const currentBackToTopButtonStyles = this.getComputedStyles(this.backToTopButton);
     
             if (currentSVGStyles.getPropertyValue("display") === "inline") {
                 this.svg.style.display = "block";
