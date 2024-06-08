@@ -190,6 +190,7 @@
     }
     connectedCallback() {
       this.backToTopLink && this.backToTopLink.setAttribute("hidden", true);
+      this.backToTopLink && (this.backToTopLink.style.display = "none");
       this.append(document.createElement("button"));
       this.backToTopButton.classList.add("back-to-top");
       this.backToTopButton.style = __privateGet(this, _hidden);
@@ -207,9 +208,6 @@
         const currentBackToTopButtonStyles = this.getComputedStyles(this.backToTopButton);
         if (currentSVGStyles.getPropertyValue("display") === "inline") {
           this.svg.style.display = "block";
-        }
-        if (currentSVGStyles.getPropertyValue("height") === currentBackToTopButtonStyles.getPropertyValue("height")) {
-          this.svg.style.height = "70%";
         }
       }
     }

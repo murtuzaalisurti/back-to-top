@@ -130,6 +130,7 @@ class BackToTop extends HTMLElement {
 
     connectedCallback() {
         this.backToTopLink && this.backToTopLink.setAttribute("hidden", true);
+        this.backToTopLink && (this.backToTopLink.style.display = 'none');
 
         this.append(document.createElement("button"));
         this.backToTopButton.classList.add("back-to-top");
@@ -161,10 +162,6 @@ class BackToTop extends HTMLElement {
     
             if (currentSVGStyles.getPropertyValue("display") === "inline") {
                 this.svg.style.display = "block";
-            }
-    
-            if (currentSVGStyles.getPropertyValue("height") === currentBackToTopButtonStyles.getPropertyValue("height")) {
-                this.svg.style.height = "70%";
             }
         }
     }
