@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.2](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.2)
+
+### Fix
+
+- modularize lodash' custom build used in this component - [`7e720dd`](https://github.com/murtuzaalisurti/back-to-top/commit/7e720dd)
+
 ## [v3.0.1](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.1)
 
 ### Improvements
