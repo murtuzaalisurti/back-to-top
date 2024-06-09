@@ -6,90 +6,220 @@
   var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
   var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 
-  // lodash.custom.min.js
-  (function() {
-    function t() {
-      return d.Date.now();
+  // modularize/isObject.js
+  function isObject(value) {
+    var type = typeof value;
+    return value != null && (type == "object" || type == "function");
+  }
+  var isObject_default = isObject;
+
+  // modularize/_freeGlobal.js
+  var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
+  var freeGlobal_default = freeGlobal;
+
+  // modularize/_root.js
+  var freeSelf = typeof self == "object" && self && self.Object === Object && self;
+  var root = freeGlobal_default || freeSelf || Function("return this")();
+  var root_default = root;
+
+  // modularize/now.js
+  var now = function() {
+    return root_default.Date.now();
+  };
+  var now_default = now;
+
+  // modularize/_Symbol.js
+  var Symbol2 = root_default.Symbol;
+  var Symbol_default = Symbol2;
+
+  // modularize/_getRawTag.js
+  var objectProto = Object.prototype;
+  var hasOwnProperty = objectProto.hasOwnProperty;
+  var nativeObjectToString = objectProto.toString;
+  var symToStringTag = Symbol_default ? Symbol_default.toStringTag : void 0;
+  function getRawTag(value) {
+    var isOwn = hasOwnProperty.call(value, symToStringTag), tag = value[symToStringTag];
+    try {
+      value[symToStringTag] = void 0;
+      var unmasked = true;
+    } catch (e) {
     }
-    function e() {
+    var result = nativeObjectToString.call(value);
+    if (unmasked) {
+      if (isOwn) {
+        value[symToStringTag] = tag;
+      } else {
+        delete value[symToStringTag];
+      }
     }
-    function n(e2, n2, r2) {
-      function i2(t2) {
-        var n3 = s2, o2 = b2;
-        return s2 = b2 = f, j2 = t2, d2 = e2.apply(o2, n3);
+    return result;
+  }
+  var getRawTag_default = getRawTag;
+
+  // modularize/_objectToString.js
+  var objectProto2 = Object.prototype;
+  var nativeObjectToString2 = objectProto2.toString;
+  function objectToString(value) {
+    return nativeObjectToString2.call(value);
+  }
+  var objectToString_default = objectToString;
+
+  // modularize/_baseGetTag.js
+  var nullTag = "[object Null]";
+  var undefinedTag = "[object Undefined]";
+  var symToStringTag2 = Symbol_default ? Symbol_default.toStringTag : void 0;
+  function baseGetTag(value) {
+    if (value == null) {
+      return value === void 0 ? undefinedTag : nullTag;
+    }
+    return symToStringTag2 && symToStringTag2 in Object(value) ? getRawTag_default(value) : objectToString_default(value);
+  }
+  var baseGetTag_default = baseGetTag;
+
+  // modularize/isObjectLike.js
+  function isObjectLike(value) {
+    return value != null && typeof value == "object";
+  }
+  var isObjectLike_default = isObjectLike;
+
+  // modularize/isSymbol.js
+  var symbolTag = "[object Symbol]";
+  function isSymbol(value) {
+    return typeof value == "symbol" || isObjectLike_default(value) && baseGetTag_default(value) == symbolTag;
+  }
+  var isSymbol_default = isSymbol;
+
+  // modularize/toNumber.js
+  var NAN = 0 / 0;
+  var reTrim = /^\s+|\s+$/g;
+  var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+  var reIsBinary = /^0b[01]+$/i;
+  var reIsOctal = /^0o[0-7]+$/i;
+  var freeParseInt = parseInt;
+  function toNumber(value) {
+    if (typeof value == "number") {
+      return value;
+    }
+    if (isSymbol_default(value)) {
+      return NAN;
+    }
+    if (isObject_default(value)) {
+      var other = typeof value.valueOf == "function" ? value.valueOf() : value;
+      value = isObject_default(other) ? other + "" : other;
+    }
+    if (typeof value != "string") {
+      return value === 0 ? value : +value;
+    }
+    value = value.replace(reTrim, "");
+    var isBinary = reIsBinary.test(value);
+    return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+  }
+  var toNumber_default = toNumber;
+
+  // modularize/debounce.js
+  var FUNC_ERROR_TEXT = "Expected a function";
+  var nativeMax = Math.max;
+  var nativeMin = Math.min;
+  function debounce(func, wait, options) {
+    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
+    if (typeof func != "function") {
+      throw new TypeError(FUNC_ERROR_TEXT);
+    }
+    wait = toNumber_default(wait) || 0;
+    if (isObject_default(options)) {
+      leading = !!options.leading;
+      maxing = "maxWait" in options;
+      maxWait = maxing ? nativeMax(toNumber_default(options.maxWait) || 0, wait) : maxWait;
+      trailing = "trailing" in options ? !!options.trailing : trailing;
+    }
+    function invokeFunc(time) {
+      var args = lastArgs, thisArg = lastThis;
+      lastArgs = lastThis = void 0;
+      lastInvokeTime = time;
+      result = func.apply(thisArg, args);
+      return result;
+    }
+    function leadingEdge(time) {
+      lastInvokeTime = time;
+      timerId = setTimeout(timerExpired, wait);
+      return leading ? invokeFunc(time) : result;
+    }
+    function remainingWait(time) {
+      var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime, timeWaiting = wait - timeSinceLastCall;
+      return maxing ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
+    }
+    function shouldInvoke(time) {
+      var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime;
+      return lastCallTime === void 0 || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
+    }
+    function timerExpired() {
+      var time = now_default();
+      if (shouldInvoke(time)) {
+        return trailingEdge(time);
       }
-      function a2(t2) {
-        var e3 = t2 - g2;
-        return t2 -= j2, g2 === f || e3 >= n2 || 0 > e3 || x2 && t2 >= y2;
+      timerId = setTimeout(timerExpired, remainingWait(time));
+    }
+    function trailingEdge(time) {
+      timerId = void 0;
+      if (trailing && lastArgs) {
+        return invokeFunc(time);
       }
-      function c2() {
-        var e3 = t();
-        if (a2(e3)) return l2(e3);
-        var o2, r3 = setTimeout;
-        o2 = e3 - j2, e3 = n2 - (e3 - g2), o2 = x2 ? h(e3, y2 - o2) : e3, m2 = r3(c2, o2);
+      lastArgs = lastThis = void 0;
+      return result;
+    }
+    function cancel() {
+      if (timerId !== void 0) {
+        clearTimeout(timerId);
       }
-      function l2(t2) {
-        return m2 = f, T && s2 ? i2(t2) : (s2 = b2 = f, d2);
-      }
-      function p2() {
-        var e3 = t(), o2 = a2(e3);
-        if (s2 = arguments, b2 = this, g2 = e3, o2) {
-          if (m2 === f) return j2 = e3 = g2, m2 = setTimeout(c2, n2), v2 ? i2(e3) : d2;
-          if (x2) return m2 = setTimeout(c2, n2), i2(g2);
+      lastInvokeTime = 0;
+      lastArgs = lastCallTime = lastThis = timerId = void 0;
+    }
+    function flush() {
+      return timerId === void 0 ? result : trailingEdge(now_default());
+    }
+    function debounced() {
+      var time = now_default(), isInvoking = shouldInvoke(time);
+      lastArgs = arguments;
+      lastThis = this;
+      lastCallTime = time;
+      if (isInvoking) {
+        if (timerId === void 0) {
+          return leadingEdge(lastCallTime);
         }
-        return m2 === f && (m2 = setTimeout(c2, n2)), d2;
+        if (maxing) {
+          timerId = setTimeout(timerExpired, wait);
+          return invokeFunc(lastCallTime);
+        }
       }
-      var s2, b2, y2, d2, m2, g2, j2 = 0, v2 = false, x2 = false, T = true;
-      if (typeof e2 != "function") throw new TypeError("Expected a function");
-      return n2 = u(n2) || 0, o(r2) && (v2 = !!r2.leading, y2 = (x2 = "maxWait" in r2) ? O(u(r2.maxWait) || 0, n2) : y2, T = "trailing" in r2 ? !!r2.trailing : T), p2.cancel = function() {
-        m2 !== f && clearTimeout(m2), j2 = 0, s2 = g2 = b2 = m2 = f;
-      }, p2.flush = function() {
-        return m2 === f ? d2 : l2(t());
-      }, p2;
-    }
-    function o(t2) {
-      var e2 = typeof t2;
-      return null != t2 && ("object" == e2 || "function" == e2);
-    }
-    function r(t2) {
-      return null != t2 && typeof t2 == "object";
-    }
-    function i(t2) {
-      var e2;
-      if (!(e2 = typeof t2 == "symbol") && (e2 = r(t2))) {
-        if (null == t2) t2 = t2 === f ? "[object Undefined]" : "[object Null]";
-        else if (x && x in Object(t2)) {
-          e2 = j.call(t2, x);
-          var n2 = t2[x];
-          try {
-            t2[x] = f;
-            var o2 = true;
-          } catch (t3) {
-          }
-          var i2 = v.call(t2);
-          o2 && (e2 ? t2[x] = n2 : delete t2[x]), t2 = i2;
-        } else t2 = v.call(t2);
-        e2 = "[object Symbol]" == t2;
+      if (timerId === void 0) {
+        timerId = setTimeout(timerExpired, wait);
       }
-      return e2;
+      return result;
     }
-    function u(t2) {
-      if (typeof t2 == "number") return t2;
-      if (i(t2)) return a;
-      if (o(t2) && (t2 = typeof t2.valueOf == "function" ? t2.valueOf() : t2, t2 = o(t2) ? t2 + "" : t2), typeof t2 != "string") return 0 === t2 ? t2 : +t2;
-      t2 = t2.replace(c, "");
-      var e2 = p.test(t2);
-      return e2 || s.test(t2) ? b(t2.slice(2), e2 ? 2 : 8) : l.test(t2) ? a : +t2;
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    return debounced;
+  }
+  var debounce_default = debounce;
+
+  // modularize/throttle.js
+  var FUNC_ERROR_TEXT2 = "Expected a function";
+  function throttle(func, wait, options) {
+    var leading = true, trailing = true;
+    if (typeof func != "function") {
+      throw new TypeError(FUNC_ERROR_TEXT2);
     }
-    var f, a = NaN, c = /^\s+|\s+$/g, l = /^[-+]0x[0-9a-f]+$/i, p = /^0b[01]+$/i, s = /^0o[0-7]+$/i, b = parseInt, y = typeof self == "object" && self && self.Object === Object && self, d = typeof global == "object" && global && global.Object === Object && global || y || Function("return this")(), m = (y = typeof exports == "object" && exports && !exports.nodeType && exports) && typeof module == "object" && module && !module.nodeType && module, g = Object.prototype, j = g.hasOwnProperty, v = g.toString, x = (g = d.Symbol) ? g.toStringTag : f, O = Math.max, h = Math.min;
-    e.debounce = n, e.throttle = function(t2, e2, r2) {
-      var i2 = true, u2 = true;
-      if (typeof t2 != "function") throw new TypeError("Expected a function");
-      return o(r2) && (i2 = "leading" in r2 ? !!r2.leading : i2, u2 = "trailing" in r2 ? !!r2.trailing : u2), n(t2, e2, { leading: i2, maxWait: e2, trailing: u2 });
-    }, e.isObject = o, e.isObjectLike = r, e.isSymbol = i, e.now = t, e.toNumber = u, e.VERSION = "4.17.5", typeof define == "function" && typeof define.amd == "object" && define.amd ? (d._ = e, define(function() {
-      return e;
-    })) : m ? ((m.exports = e)._ = e, y._ = e) : d._ = e;
-  }).call(void 0);
+    if (isObject_default(options)) {
+      leading = "leading" in options ? !!options.leading : leading;
+      trailing = "trailing" in options ? !!options.trailing : trailing;
+    }
+    return debounce_default(func, wait, {
+      "leading": leading,
+      "maxWait": wait,
+      "trailing": trailing
+    });
+  }
+  var throttle_default = throttle;
 
   // main.js
   var _defaultStyles, _hidden, _show;
@@ -184,7 +314,7 @@
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
     throttledFunction(rate) {
-      return _.throttle(() => {
+      return throttle_default(() => {
         let prevScrollPos = document.documentElement.scrollTop || window.scrollY || document.body.scrollTop;
         this.currentScrollPos <= prevScrollPos ? this.backToTopButton.style = __privateGet(this, _hidden) : this.backToTopButton.style = __privateGet(this, _show);
         this.currentScrollPos = prevScrollPos;
@@ -229,11 +359,6 @@
   var BackToTop = _BackToTop;
   BackToTop.register();
 })();
-/**
- * @license
- * Lodash (Custom Build) lodash.com/license | Underscore.js 1.8.3 underscorejs.org/LICENSE
- * Build: `lodash include="throttle" -p`
- */
 /**
  * @license
  * This component uses a custom loash build which includes only the 'throttle' module

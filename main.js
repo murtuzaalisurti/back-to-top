@@ -2,7 +2,7 @@
  * @license
  * This component uses a custom loash build which includes only the 'throttle' module
  */
-import "./lodash.custom.min.js"
+import throttle from "./modularize/throttle.js"
 
 class BackToTop extends HTMLElement {
     constructor() {
@@ -115,7 +115,7 @@ class BackToTop extends HTMLElement {
     }
 
     throttledFunction(rate) {
-        return _.throttle(() => {
+        return throttle(() => {
             let prevScrollPos =
                 document.documentElement.scrollTop ||
                 window.scrollY ||

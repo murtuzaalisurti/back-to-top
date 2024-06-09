@@ -5,7 +5,7 @@
   "type": "module",
   "main": "public/main.js",
   "scripts": {
-    "lodash:custom": "lodash include=throttle -p",
+    "lodash:custom": "lodash modularize exports=es,commonjs include=throttle -p",
     "build": "node build.js",
     "build:watch": "node build.js watch",
     "serve": "nodemon server.js",
