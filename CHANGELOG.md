@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.3](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.3)
+
+### Improvements
+
+- remove dependencies which were actually dev dependencies - [`9a5ede5`](https://github.com/murtuzaalisurti/back-to-top/commit/9a5ede5)
+
 ## [v3.0.2](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.2)
 
 ### Fix
