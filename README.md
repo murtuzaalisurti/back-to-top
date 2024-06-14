@@ -155,5 +155,4 @@ Try it on [Codepen](https://codepen.io/seekertruth/pen/gOJLQKW) or, see it in ac
 ### Some other sites using this web component
 
 - [rssed.netlify.app](https://github.com/murtuzaalisurti/rssed)
-- [syntackle.com](https://syntackle.com)
 - [murtuzaalisurti.github.io](https://murtuzaalisurti.github.io)
