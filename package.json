@@ -1,6 +1,6 @@
 {
   "name": "@murtuzaalisurti/back-to-top",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "<back-to-top> web component by Murtuzaali Surti",
   "type": "module",
   "main": "public/main.js",
