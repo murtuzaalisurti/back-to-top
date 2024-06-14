@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.4](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.4)
+
+### Improvements
+
+- minify output - [`82e096f`](https://github.com/murtuzaalisurti/back-to-top/commit/82e096f43a26ca85ef281f000da45c05e8c6850a)
+
 ## [v3.0.3](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/v/3.0.3)
 
 ### Improvements

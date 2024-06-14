@@ -151,3 +151,9 @@ Introduced in [v2.0](https://www.npmjs.com/package/@murtuzaalisurti/back-to-top/
 ## Demo
 
 Try it on [Codepen](https://codepen.io/seekertruth/pen/gOJLQKW) or, see it in action here [https://murtuzaalisurti.github.io/back-to-top/](https://murtuzaalisurti.github.io/back-to-top/).
+
+### Some other sites using this web component
+
+- [rssed.netlify.app](https://github.com/murtuzaalisurti/rssed)
+- [syntackle.com](https://syntackle.com)
+- [murtuzaalisurti.github.io](https://murtuzaalisurti.github.io)
