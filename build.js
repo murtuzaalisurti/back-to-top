@@ -6,7 +6,8 @@ const config = {
     entryPoints: ['main.js'],
     bundle: true,
     target: ['es2020'],
-    outdir: './public'
+    outdir: './public',
+    minify: true
 };
 
 mode === "watch"
